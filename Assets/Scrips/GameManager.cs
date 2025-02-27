@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
     public static GameManager instance;
     public GameState state;
+    public EnemyConfig enemyConfig;
     public static event Action<GameState> OnGameStateChanged;
     void Awake()
     {
