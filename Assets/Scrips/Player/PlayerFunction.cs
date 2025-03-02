@@ -6,14 +6,6 @@ public class PlayerFunction : MonoBehaviour
     public float lookDistance = 3f;
     public LayerMask interactableLayer;
 
-    [Header("Skill A")]
-    public float rangeSkill = 4f;
-    public float countDown = 1.5f;
-    public GameObject skillAoeFx;
-    public LayerMask enemyLayer;
-    public float skillDamage = 6.5f;
-    [Header("Skill B")]
-    public float abc;
 
     // Start is called before the first frame update
    
@@ -22,7 +14,6 @@ public class PlayerFunction : MonoBehaviour
     void Update()
     {
         CameraLooking();
-        InputForSkill();
     }
 
     void CameraLooking()
@@ -39,49 +30,5 @@ public class PlayerFunction : MonoBehaviour
         }
 
     }
-    void InputForSkill()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            SkillA();
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            SkillB(transform.position);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SkillC();
-        }
-    }
-
-    private void SkillC()
-    {
-        
-    }
-
-    private void SkillA()
-    {
-    
-    }
-
-   private void SkillB(Vector3 position)
-   {
-        if (skillAoeFx != null)
-        {
-            Instantiate(skillAoeFx, position, Quaternion.identity);
-        }
-            // Tìm tất cả kẻ địch trong vùng ảnh hưởng
-            Collider[] hitEnemies = Physics.OverlapSphere(position, rangeSkill, enemyLayer);
-
-            foreach (Collider enemy in hitEnemies)
-            {
-                //EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-                //if (enemyHealth != null)
-                //{
-                //enemyHealth.TakeDamage(skillDamage);
-                //}
-            }
-        
-   }
+  
 }

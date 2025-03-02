@@ -1,12 +1,16 @@
-using UnityEngine;
+ï»¿using UnityEngine;
+using System;
 
 public class WarriorAttack : MonoBehaviour
 {
-    public float damage = 20f; // Sát th??ng g?c
+    public float baseDamage = 20;
+    public float critChance = 0.2f;
+    public float critMultiplier = 2f;
+
+    public event Action<WarriorAttack, GameObject> OnAttack;
 
     public void AttackEnemy(GameObject enemy)
     {
-        enemy.GetComponent<Health>()?.TakeDamage(damage);
-        Debug.Log("Dealt " + damage + " damage to " + enemy.name);
+        OnAttack?.Invoke(this, enemy);
     }
 }

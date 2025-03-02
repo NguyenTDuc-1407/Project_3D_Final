@@ -17,7 +17,7 @@ public class Minions : MonoBehaviour
     [SerializeField] float moveSpeed;
     void Start()
     {
-        animatiorMinions = GetComponent<Animator>();
+        //animatiorMinions = GetComponent<>();
         InvokeRepeating("caculatePath", 0f, 0.5f);
     }
     void Update()

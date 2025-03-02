@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Judgment : SkillBase
+public class WhirlwindSkill : SkillBase
 {
     public float duration = 3f; // Thời gian xoay kiếm
     public float damage = 10f;
@@ -25,9 +25,9 @@ public class Judgment : SkillBase
         while (timer < duration)
         {
             Collider[] enemies = Physics.OverlapSphere(transform.position, radius, enemyLayer);
-            foreach (Collider enemy in enemies)
+            foreach (Collider minion in enemies)
             {
-
+                minion.GetComponent<Minions>()?.DameEnemy((int)((int)damage * Time.deltaTime));
             }
             yield return null;
             timer += Time.deltaTime;
