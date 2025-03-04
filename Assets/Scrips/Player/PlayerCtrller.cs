@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,16 +8,26 @@ public class PlayerCtrller : MonoBehaviour
     [Header("Character")]
     public float speed = 12f;
     public float gravity = -0.981f * 2;
-    public float jumHeight = 3f;
+    public float jumpHeight = 1.5f;
     public Transform groundCheck;
     public LayerMask groundMask;
     public float groundDistance = 0.4f;
     private CharacterController controller;
     private Vector3 velocity;
+    private Animator animator;
+
+    private int isJumping;
+    
+
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+        isJumping = Animator.StringToHash("isJumping");
+        
     }
 
     // Update is called once per frame
@@ -32,10 +43,17 @@ public class PlayerCtrller : MonoBehaviour
         controller.Move(move * speed * Time.deltaTime);
         if (Input.GetButtonDown("Jump") && IsCheckGround())
         {
-            velocity.y = Mathf.Sqrt(jumHeight - gravity * 2f);
+            if (animator != null)
+            {
+                animator.SetTrigger(isJumping);
+            }
+
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        AnimatorMovementInput(IsCheckGround());
     }
     bool IsCheckGround()
     {
@@ -46,5 +64,19 @@ public class PlayerCtrller : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
+    }
+
+    private void AnimatorMovementInput(bool isGrounded)
+    {
+            if (animator != null)
+        {
+            if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0))
+            {
+                animator.SetBool("isWalking", true);
+            }
+            else animator.SetBool("isWalking", false);
+            animator.SetBool("inAir", !isGrounded); // Nếu không đứng trên mặt đất thì kích hoạt 
+            }
+
     }
 }

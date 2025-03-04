@@ -10,6 +10,12 @@ public class WhirlwindSkill : SkillBase
     public float radius = 5f;
     public LayerMask enemyLayer;
     private bool isSpinning = false;
+    private Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     protected override void ExecuteSkill()
     {
         if (isSpinning)

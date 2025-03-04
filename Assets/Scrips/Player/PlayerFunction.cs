@@ -25,7 +25,7 @@ public class PlayerFunction : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("Tuong Tac" + hit.collider.gameObject.name);
+                
             }
         }
 
