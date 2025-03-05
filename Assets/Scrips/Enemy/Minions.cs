@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Pathfinding;
 using UnityEngine;
@@ -12,17 +11,88 @@ public class Minions : MonoBehaviour
     private Animator animatiorMinions;
     // public GameObject item;
     Vector3 direction;
+    Vector3 stopPosition;
+    float walkTime;
+    float walkCounter;
+    float waitTime;
+    float waitCounter;
+    int WalkDirection;
+    public bool isWalking;
     public bool checkDead = false;
     [SerializeField] float nextWpDis;
     [SerializeField] float moveSpeed;
     void Start()
     {
         //animatiorMinions = GetComponent<>();
+        walkTime = Random.Range(3, 6);
+        waitTime = Random.Range(5, 7);
+
+        waitCounter = waitTime;
+        walkCounter = walkTime;
+
+        ChooseDirection();
         InvokeRepeating("caculatePath", 0f, 0.5f);
     }
     void Update()
     {
+        if (isWalking)
+        {
 
+            // animator.SetBool("isRunning", true);
+
+            walkCounter -= Time.deltaTime;
+
+            switch (WalkDirection)
+            {
+                case 0:
+                    transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                    break;
+                case 1:
+                    transform.localRotation = Quaternion.Euler(0f, 90, 0f);
+                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                    break;
+                case 2:
+                    transform.localRotation = Quaternion.Euler(0f, -90, 0f);
+                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                    break;
+                case 3:
+                    transform.localRotation = Quaternion.Euler(0f, 180, 0f);
+                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                    break;
+            }
+
+            if (walkCounter <= 0)
+            {
+                stopPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+                isWalking = false;
+                //stop movement
+                transform.position = stopPosition;
+                // animator.SetBool("isRunning", false);
+                //reset the waitCounter
+                waitCounter = waitTime;
+            }
+
+
+        }
+        else
+        {
+
+            waitCounter -= Time.deltaTime;
+
+            if (waitCounter <= 0)
+            {
+                ChooseDirection();
+            }
+        }
+
+    }
+    public void ChooseDirection()
+    {
+        WalkDirection = Random.Range(0, 4);
+
+        isWalking = true;
+        walkCounter = walkTime;
     }
     public void DameEnemy(int damage)
     {
