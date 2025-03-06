@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
-public class PlayerStatus : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [Header("Stats")]
     [SerializeField] private int maxHP = 100;
     [SerializeField] private int currentHP;
     [SerializeField] private int maxMana = 50;
     [SerializeField] private int currentMana;
-    [SerializeField] private int attackDamage = 10;
+    [SerializeField] public int attackDamage = 10;
     [SerializeField] private int defense = 5;
+    [SerializeField] public float critChance = 0.2f;
+    [SerializeField] public float critMultiplier = 2f;
 
     [Header("Level & Exp")]
     [SerializeField] private int level = 1;
@@ -79,6 +82,7 @@ public class PlayerStatus : MonoBehaviour
         // Thực hiện logic hồi sinh hoặc game over
     }
 
+  
     public int GetCurrentHP() => currentHP;
     public int GetMaxHP() => maxHP;
     public int GetGold() => gold;
