@@ -36,7 +36,6 @@ public class SpikesTrap : MonoBehaviour
 
         spikesTransform.localPosition = activatedPosition;
 
-        PlayerStatus targetHealth = target.GetComponent<PlayerStatus>();
         Player targetHealth = target.GetComponent<Player>();
         if (targetHealth != null)
         {

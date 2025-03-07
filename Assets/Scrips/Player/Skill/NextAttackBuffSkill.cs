@@ -11,7 +11,6 @@ public class NextAttackBuffSkill : SkillBase
 
     private void Start()
     {
-        FindObjectOfType<WarriorAttack>().OnAttack += ApplyBuff;
         PlayerFunction = FindObjectOfType<PlayerFunction>();
         if (PlayerFunction != null)
         {
@@ -27,21 +26,18 @@ public class NextAttackBuffSkill : SkillBase
         Debug.Log(skillName + " activated! Next attack buffed.");
     }
 
-    private void ApplyBuff(WarriorAttack attackSystem, GameObject target)
     private void ApplyBuff(Player playerAttack, GameObject target, float attackDamage)
     {
         if (!isBuffed) return;
         if (!isBuffed || target == null) return;
 
-        float damage = attackSystem.baseDamage;
-        bool isCritical = Random.value < attackSystem.critChance;
-        float damage = attackDamage;
+        float damage = playerAttack.attackDamage;
         bool isCritical = (playerAttack.critChance > 0) && (Random.value < playerAttack.critChance);
 
         if (isCritical)
         {
             damage *= attackBoostOnCrit;
-            damage *= attackSystem.critMultiplier;
+            damage *= playerAttack.critMultiplier;
             damage *= Mathf.Max(1f, playerAttack.critMultiplier);
         }
         else
@@ -69,8 +65,7 @@ public class NextAttackBuffSkill : SkillBase
 
     private void OnDestroy()
     {
-        // Gỡ đăng ký khi GameObject bị hủy
-        FindObjectOfType<WarriorAttack>().OnAttack -= ApplyBuff;
+      
         if (PlayerFunction != null)
         {
             PlayerFunction.OnAttack -= ApplyBuff;

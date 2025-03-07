@@ -60,7 +60,7 @@ public class PlayerFunction : MonoBehaviour
 
     }
   
-}    void IsAttack()
+    void IsAttack()
         {
         animator.SetTrigger(isAttacking);
         Collider[] hitMinions = Physics.OverlapSphere(transform.position, attackRange, minionsLayer);
