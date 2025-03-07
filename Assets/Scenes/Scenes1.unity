@@ -2241,8 +2241,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450652408108460}
-  - component: {fileID: 919132148199132953}
-  - component: {fileID: 919132148199132952}
   - component: {fileID: 919132148199132951}
   - component: {fileID: 919132148199132955}
   - component: {fileID: 919132148199132956}
@@ -2272,43 +2270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e4bf1ad20a7854eb6395a0b66d3ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextAttackBuffSkill: {fileID: 0}
-  whirlwindSkill: {fileID: 0}
---- !u!114 &919132148199132952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148199132950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f7449ddaa9314f468c117136e949c20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseSensivity: 500
-  topClamp: -90
-  bottonClamp: 90
---- !u!114 &919132148199132953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148199132950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c537d17e107af34e8431d31e339b48f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 3.5
-  gravity: -1.962
-  jumpHeight: 3
-  groundCheck: {fileID: 1361494604}
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
-  groundDistance: 0.4
 --- !u!143 &919132148199132955
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2418,14 +2379,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb661de29cf762a4ba797d535c1e1618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillName: 
-  cooldownTime: 0
-  duration: 3
-  damage: 10
-  radius: 5
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &919132148199132960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2438,10 +2391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8209df13ea1b169459f31aeab7af69b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillName: 
-  cooldownTime: 0
-  buffMultiplier: 2
-  attackBoostOnCrit: 1.5
 --- !u!114 &919132148199132961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2454,8 +2403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e4bf1ad20a7854eb6395a0b66d3ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextAttackBuffSkill: {fileID: 919132148199132960}
-  whirlwindSkill: {fileID: 919132148199132959}
 --- !u!114 &919132148199132962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2468,22 +2415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 462c12fe34a719a459c192592bd62d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 100
-  currentHP: 0
-  maxMana: 50
-  currentMana: 0
-  attackDamage: 10
-  defense: 5
-  critChance: 0.2
-  critMultiplier: 2
-  level: 1
-  exp: 0
-  expToNextLevel: 100
-  gold: 0
-  items: []
-  isDead: 0
-  isInvincible: 0
-  statusEffects: []
 --- !u!114 &919132148199132963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2496,15 +2427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71113f59ab12e6d419733803996b096c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookDistance: 3
-  interactableLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  skillAoeFx: {fileID: 0}
-  minionsLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  attackPlayer: 0
 --- !u!1 &954683106242594501
 GameObject:
   m_ObjectHideFlags: 0

@@ -121,7 +121,7 @@ public class Minions : MonoBehaviour
     //location player
     Vector3 findTarget()
     {
-        Vector3 playPos = FindObjectOfType<PlayerStatus>().transform.position;
+        Vector3 playPos = FindObjectOfType<Player>().transform.position;
         return playPos;
     }
     void OnpathCallBack(Path p)
