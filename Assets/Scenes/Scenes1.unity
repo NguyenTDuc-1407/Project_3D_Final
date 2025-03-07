@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 1008223676}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2241,7 +2241,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 543450652408108460}
-  - component: {fileID: 919132148199132954}
   - component: {fileID: 919132148199132953}
   - component: {fileID: 919132148199132952}
   - component: {fileID: 919132148199132951}
@@ -2249,6 +2248,11 @@ GameObject:
   - component: {fileID: 919132148199132956}
   - component: {fileID: 919132148199132957}
   - component: {fileID: 919132148199132958}
+  - component: {fileID: 919132148199132963}
+  - component: {fileID: 919132148199132962}
+  - component: {fileID: 919132148199132961}
+  - component: {fileID: 919132148199132960}
+  - component: {fileID: 919132148199132959}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Player
@@ -2305,32 +2309,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundDistance: 0.4
---- !u!114 &919132148199132954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148199132950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee5544da9c0de654ba1ad972e6416ebb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 100
-  currentHP: 0
-  maxMana: 50
-  currentMana: 0
-  attackDamage: 10
-  defense: 5
-  level: 1
-  exp: 0
-  expToNextLevel: 100
-  gold: 0
-  items: []
-  isDead: 0
-  isInvincible: 0
-  statusEffects: []
 --- !u!143 &919132148199132955
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2417,7 +2395,7 @@ Animator:
   m_GameObject: {fileID: 919132148199132950}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0659c85ade49ee444bdce91e16c43ccf, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4389b6c6e9048fd49837ddc538d3a333, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2428,6 +2406,105 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &919132148199132959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148199132950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb661de29cf762a4ba797d535c1e1618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: 
+  cooldownTime: 0
+  duration: 3
+  damage: 10
+  radius: 5
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+--- !u!114 &919132148199132960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148199132950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8209df13ea1b169459f31aeab7af69b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillName: 
+  cooldownTime: 0
+  buffMultiplier: 2
+  attackBoostOnCrit: 1.5
+--- !u!114 &919132148199132961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148199132950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4e4bf1ad20a7854eb6395a0b66d3ed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextAttackBuffSkill: {fileID: 919132148199132960}
+  whirlwindSkill: {fileID: 919132148199132959}
+--- !u!114 &919132148199132962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148199132950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462c12fe34a719a459c192592bd62d3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 100
+  currentHP: 0
+  maxMana: 50
+  currentMana: 0
+  attackDamage: 10
+  defense: 5
+  critChance: 0.2
+  critMultiplier: 2
+  level: 1
+  exp: 0
+  expToNextLevel: 100
+  gold: 0
+  items: []
+  isDead: 0
+  isInvincible: 0
+  statusEffects: []
+--- !u!114 &919132148199132963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148199132950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71113f59ab12e6d419733803996b096c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lookDistance: 3
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  skillAoeFx: {fileID: 0}
+  minionsLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  attackPlayer: 0
 --- !u!1 &954683106242594501
 GameObject:
   m_ObjectHideFlags: 0
