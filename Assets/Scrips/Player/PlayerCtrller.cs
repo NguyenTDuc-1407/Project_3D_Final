@@ -16,18 +16,12 @@ public class PlayerCtrller : MonoBehaviour
     private Vector3 velocity;
     private Animator animator;
 
-    private int isJumping;
-    
-
-
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        isJumping = Animator.StringToHash("isJumping");
-        
+
     }
 
     // Update is called once per frame
@@ -37,16 +31,12 @@ public class PlayerCtrller : MonoBehaviour
         {
             velocity.y = -2f;
         }
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-        Vector3 move = (transform.right * x + transform.forward * z);
-        controller.Move(move * speed * Time.deltaTime);
+
         if (Input.GetButtonDown("Jump") && IsCheckGround())
         {
-            if (animator != null)
-            {
-                animator.SetTrigger(isJumping);
-            }
+            animator.SetBool("isJumping", true);
+
+
 
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -54,6 +44,18 @@ public class PlayerCtrller : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
 
         AnimatorMovementInput(IsCheckGround());
+
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+            transform.Translate(-Vector3.forward * speed * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+            transform.Translate(Vector3.left * speed * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+            transform.Translate(Vector3.right * speed * Time.deltaTime);
     }
     bool IsCheckGround()
     {
@@ -69,14 +71,15 @@ public class PlayerCtrller : MonoBehaviour
     private void AnimatorMovementInput(bool isGrounded)
     {
             if (animator != null)
-        {
+            {
             if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0))
             {
                 animator.SetBool("isWalking", true);
             }
             else animator.SetBool("isWalking", false);
             animator.SetBool("inAir", !isGrounded); // Nếu không đứng trên mặt đất thì kích hoạt 
-            }
+            animator.SetBool("isJumping", !isGrounded);
+        }
 
     }
 }

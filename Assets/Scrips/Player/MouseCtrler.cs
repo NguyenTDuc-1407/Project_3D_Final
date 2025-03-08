@@ -22,9 +22,9 @@ public class MouseCtrler : MonoBehaviour
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensivity * Time.deltaTime;
         //Debug.Log(mouseX);
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensivity * Time.deltaTime;
+        //float mouseY = Input.GetAxis("Mouse Y") * mouseSensivity * Time.deltaTime;
         //Debug.Log(mouseY);
-        xRotation -= mouseY;
+        //xRotation -= mouseY;
         yRotation += mouseX;
         xRotation = Mathf.Clamp(xRotation, topClamp, bottonClamp);
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
