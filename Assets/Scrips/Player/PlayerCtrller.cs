@@ -77,8 +77,7 @@ public class PlayerCtrller : MonoBehaviour
                 animator.SetBool("isWalking", true);
             }
             else animator.SetBool("isWalking", false);
-            animator.SetBool("inAir", !isGrounded); // Nếu không đứng trên mặt đất thì kích hoạt 
-            animator.SetBool("isJumping", !isGrounded);
+          
         }
 
     }

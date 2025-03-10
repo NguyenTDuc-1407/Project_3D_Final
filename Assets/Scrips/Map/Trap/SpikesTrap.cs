@@ -49,4 +49,6 @@ public class SpikesTrap : MonoBehaviour
         yield return new WaitForSeconds(resetTime);
         isActive = false;
     }
+
+    
 }

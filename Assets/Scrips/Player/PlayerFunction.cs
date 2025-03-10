@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,16 +7,17 @@ using UnityEngine.UIElements;
 public class PlayerFunction : MonoBehaviour
 {
     [Header("Looking")]
-    public float lookDistance = 3f;
+    public float interactionRange = 3f;
     public LayerMask interactableLayer;
+    private IInteractable currentInteractable;
 
 
     // Start is called before the first frame update
-   
+
     public GameObject skillAoeFx;
     public LayerMask minionsLayer;
     private float attackRange = 2f;
-    public float attackPlayer;
+    private float attackPlayer;
     private Player player;
     private Animator animator;
     private int isAttacking;
@@ -46,21 +47,35 @@ public class PlayerFunction : MonoBehaviour
 
     void CameraLooking()
     {
-        Vector3 screenCenter = new Vector3(Screen.width / 2, Screen.height / 2, 0);
-        Ray look = Camera.main.ScreenPointToRay(screenCenter);
-        RaycastHit hit;
-        if (Physics.Raycast(look, out hit, lookDistance, interactableLayer))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                
-                Debug.Log("Tuong Tac" + hit.collider.gameObject.name);
-            }
-        }
+            Vector3 rayOrigin = transform.position + Vector3.up;
+            Vector3 rayDirection = transform.forward;
+            Ray ray = new Ray(rayOrigin, rayDirection);
 
+            RaycastHit[] hits = Physics.RaycastAll(ray, interactionRange, interactableLayer);
+            Debug.DrawRay(ray.origin, ray.direction * interactionRange, Color.red, 2f);
+
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.collider.CompareTag("Player")) continue; // Bỏ qua Player
+
+                IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+                if (interactable != null)
+                {
+                    Debug.Log("Tìm thấy vật thể có thể tương tác: " + hit.collider.name);
+                    currentInteractable = interactable;
+                    currentInteractable.Interact();
+                    return;
+                }
+            }
+
+            Debug.LogWarning("Không tìm thấy vật thể nào có thể tương tác!");
+            currentInteractable = null;
+        }
     }
-  
-    void IsAttack()
+
+        void IsAttack()
         {
         animator.SetTrigger(isAttacking);
         Collider[] hitMinions = Physics.OverlapSphere(transform.position, attackRange, minionsLayer);
