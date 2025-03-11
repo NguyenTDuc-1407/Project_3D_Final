@@ -9,9 +9,11 @@ public class GameManager : MonoBehaviour
     public GameState state;
     public EnemyConfig enemyConfig;
     public ItemDatas itemData;
+    public GameObject inventory;
     ConfigManger configManger;
     public List<ItemDatas> listItemDatas = new List<ItemDatas>();
-    public InventoryUI inventoryUI;
+    InventoryUI inventoryUI;
+    bool checkOpenInventory;
     public static event Action<GameState> OnGameStateChanged;
     void Awake()
     {
@@ -22,6 +24,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        inventory.SetActive(false);
         UpdateGameState(GameState.start);
     }
     public void UpdateGameState(GameState newState)
@@ -36,6 +39,26 @@ public class GameManager : MonoBehaviour
 
         }
         OnGameStateChanged?.Invoke(newState);
+    }
+    private void Update()
+    {
+        OpenInventory();
+    }
+    void OpenInventory()
+    {
+        if (Input.GetKey(KeyCode.Tab))
+        {
+            if (checkOpenInventory == true)
+            {
+                inventory.SetActive(true);
+                checkOpenInventory = false;
+            }
+            else
+            {
+                inventory.SetActive(false);
+                checkOpenInventory = true;
+            }
+        }
     }
     public void Add(ItemConfig itemConfig)
     {
