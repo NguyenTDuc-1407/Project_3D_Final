@@ -84,6 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seeker: {fileID: 1923560780220381609}
+  isWalking: 0
   checkDead: 0
   nextWpDis: 1
   moveSpeed: 2
@@ -127,6 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1365c71d95a73ae4d9e6a5d27addb5ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpEnemy: 10
-  minDamage: 2
-  maxDamage: 3
+  hpEnemy: 8
+  minDamage: 4
+  maxDamage: 5
