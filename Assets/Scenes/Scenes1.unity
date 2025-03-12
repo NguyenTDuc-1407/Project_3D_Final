@@ -11847,8 +11847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minions:
-  - {fileID: 5749539195666570782, guid: c4a2b17ca9fed024f9f22b0b195acde6, type: 3}
-  - {fileID: 5749539195666570782, guid: c4a2b17ca9fed024f9f22b0b195acde6, type: 3}
+  - {fileID: 3615206466480423939, guid: aeb4dfed5944c9b4685405996ce05fa9, type: 3}
   minionsPos: {fileID: 1181664370}
   timeMinions: 0.2
 --- !u!4 &1181664370

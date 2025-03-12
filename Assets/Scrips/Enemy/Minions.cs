@@ -147,7 +147,7 @@ public class Minions : MonoBehaviour
         int currentWp = 0;
         while (currentWp < path.vectorPath.Count)
         {
-            path.vectorPath[currentWp] = new Vector3(path.vectorPath[currentWp].x, 0, path.vectorPath[currentWp].z);
+            path.vectorPath[currentWp] = new Vector3(path.vectorPath[currentWp].x, 0f, path.vectorPath[currentWp].z);
             direction = (path.vectorPath[currentWp] - transform.position).normalized;
             Vector3 force = direction * moveSpeed * Time.deltaTime;
             transform.position += force;
