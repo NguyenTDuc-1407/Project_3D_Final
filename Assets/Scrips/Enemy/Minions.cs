@@ -172,25 +172,25 @@ public class Minions : MonoBehaviour
             yield return null;
         }
     }
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.CompareTag("Player"))
-    //     {
-    //         FindObjectOfType<GameManager>().player = other.GetComponent<Player>();
-    //         InvokeRepeating("Damage", 0, 0.3f);
-    //     }
-    // }
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     if (other.CompareTag("Player"))
-    //     {
-    //         FindObjectOfType<GameManager>().player = null;
-    //         CancelInvoke("Damage");
-    //     }
-    // }
-    // void Damage()
-    // {
-    //     int damage = Random.Range(minDamage, maxDamage);
-    //     FindObjectOfType<GameManager>().TakeDamagePlayer(damage);
-    // }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            FindObjectOfType<GameManager>().player = other.GetComponent<Player>();
+            InvokeRepeating("Damage", 0, 0.3f);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            FindObjectOfType<GameManager>().player = null;
+            CancelInvoke("Damage");
+        }
+    }
+    void Damage()
+    {
+        int damage = Random.Range( gameManager.enemyConfig.minDamage,  gameManager.enemyConfig.maxDamage);
+        FindObjectOfType<GameManager>().TakeDamagePlayer(damage);
+    }
 }

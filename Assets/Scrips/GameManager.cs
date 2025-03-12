@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public EnemyConfig enemyConfig;
     public ConfigInventory configInventory;
     ItemConfig itemConfig;
+    public Player player;
     // public ItemDatas itemData;
     public GameObject inventory;
     // // ConfigManger configManger;
@@ -123,7 +124,10 @@ public class GameManager : MonoBehaviour
     {
         inventoryUI.DisplayInventory();
     }
-
+    public void TakeDamagePlayer(int damage)
+    {
+        player.TakeDamage(damage);
+    }
     public enum GameState
     {
         start,
