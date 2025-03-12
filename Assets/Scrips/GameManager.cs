@@ -8,10 +8,12 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameState state;
     public EnemyConfig enemyConfig;
-    public ItemDatas itemData;
+    public ConfigInventory configInventory;
+    ItemConfig itemConfig;
+    // public ItemDatas itemData;
     public GameObject inventory;
-    ConfigManger configManger;
-    public List<ItemDatas> listItemDatas = new List<ItemDatas>();
+    // // ConfigManger configManger;
+    // public List<ItemDatas> listItemDatas = new List<ItemDatas>();
     InventoryUI inventoryUI;
     bool checkOpenInventory;
     public static event Action<GameState> OnGameStateChanged;
@@ -64,9 +66,6 @@ public class GameManager : MonoBehaviour
     {
         if (ConfigInventory.instance.itemConfigs != null)
         {
-            itemData.id = 1;
-            configManger.GetItemConfigById(itemData.id);
-            Debug.Log(GameManager.instance.itemData.id);
             if (itemConfig.IsStack())
             {
                 bool itemAlreadyInventory = false;
@@ -74,14 +73,14 @@ public class GameManager : MonoBehaviour
                 {
                     if (inventoryItem.id == itemConfig.id)
                     {
-                        // GameManager.instance.itemData.amount += 1;
+                        itemConfig.amount += 1;
                         itemAlreadyInventory = true;
                         InventorySlotUI();
                     }
                 }
                 if (!itemAlreadyInventory)
                 {
-                    // GameManager.instance.itemData.amount += 1;
+                    itemConfig.amount += 1;
                     ConfigInventory.instance.itemConfigs.Add(itemConfig);
                     InventorySlotUI();
                 }
@@ -97,27 +96,27 @@ public class GameManager : MonoBehaviour
     {
         // player.RecoveryEnergyItem(itemRecovery);
     }
-    public void UseItemInventory(ItemDatas itemDatas)
+    public void UseItemInventory(ItemConfig itemDatas)
     {
-        itemDatas.id = configManger.GetItemConfigById(itemDatas.id).id;
+        
         itemDatas.amount -= 1;
         if (itemDatas.amount == 0)
         {
-            RemoveItem(itemDatas);
+            RemoveItem(itemConfig);
         }
-        switch (configManger.GetItemConfigById(itemDatas.id).itemtype)
+        switch (itemConfig.itemtype)
         {
             case Itemtype.Energy:
-                RecoveryItem(configManger.GetItemConfigById(itemDatas.id).value);
+                RecoveryItem(itemConfig.value);
                 break;
             case Itemtype.Hp:
-                RecoveryItem(configManger.GetItemConfigById(itemDatas.id).value);
+                RecoveryItem(itemConfig.value);
                 break;
         }
     }
-    public void RemoveItem(ItemDatas itemDatas)
+    public void RemoveItem(ItemConfig itemDatas)
     {
-        listItemDatas.Remove(itemDatas);
+        ConfigInventory.instance.itemConfigs.Remove(itemDatas);
 
     }
     public void InventorySlotUI()

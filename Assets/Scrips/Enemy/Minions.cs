@@ -23,7 +23,7 @@ public class Minions : MonoBehaviour
     [SerializeField] float moveSpeed;
     void Start()
     {
-        //animatiorMinions = GetComponent<>();
+        animatiorMinions = GetComponent<Animator>();
         walkTime = Random.Range(3, 6);
         waitTime = Random.Range(5, 7);
 
@@ -111,6 +111,7 @@ public class Minions : MonoBehaviour
         if (seeker.IsDone())
         {
             seeker.StartPath(transform.position, target, OnpathCallBack);
+               animatiorMinions.SetBool("Run", false);
         }
         else
         {
@@ -122,6 +123,7 @@ public class Minions : MonoBehaviour
     Vector3 findTarget()
     {
         Vector3 playPos = FindObjectOfType<Player>().transform.position;
+          animatiorMinions.SetBool("Run", true);
         return playPos;
     }
     void OnpathCallBack(Path p)

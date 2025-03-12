@@ -12,13 +12,13 @@ public class InventoryUI : MonoBehaviour
         {
             Destroy(itemUI.gameObject);
         }
-        foreach (ItemDatas itemDatas in GameManager.instance.listItemDatas)
+        foreach (ItemConfig itemDatas in ConfigInventory.instance.itemConfigs)
         {
             GameObject itemNewSlot = Instantiate(inventorySlotUI, itemsParentUI);
             var countItemUI = itemNewSlot.transform.Find("CountItem").GetComponent<TextMeshProUGUI>();
             countItemUI.text = itemDatas.amount.ToString();
             var itemImageUI = itemNewSlot.transform.Find("ImageItem").GetComponent<Image>();
-            itemImageUI.sprite = ConfigManger.instance.GetItemConfigById(itemDatas.id).image;
+            itemImageUI.sprite = itemDatas.image;
             itemNewSlot.GetComponent<ItemUI>().SetItem(itemDatas);
         }
     }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ItemUI : MonoBehaviour
 {
-    ItemDatas itemDatas;
-    public void SetItem(ItemDatas itemDatas)
+    ItemConfig itemDatas;
+    public void SetItem(ItemConfig itemDatas)
     {
         this.itemDatas = itemDatas;
     }

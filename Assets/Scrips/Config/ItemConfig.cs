@@ -10,6 +10,7 @@ public class ItemConfig : ScriptableObject
     public int value;
     public Itemtype itemtype;
     public Sprite image;
+    public int amount;
     public bool IsStack()
     {
         switch (itemtype)
