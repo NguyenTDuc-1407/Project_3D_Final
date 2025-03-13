@@ -35,56 +35,56 @@ public class Minions : MonoBehaviour
     }
     void Update()
     {
-        if (isWalking)
-        {
+        // if (isWalking)
+        // {
 
-            // animator.SetBool("isRunning", true);
+        //     // animator.SetBool("isRunning", true);
 
-            walkCounter -= Time.deltaTime;
+        //     walkCounter -= Time.deltaTime;
 
-            switch (WalkDirection)
-            {
-                case 0:
-                    transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                    break;
-                case 1:
-                    transform.localRotation = Quaternion.Euler(0f, 90, 0f);
-                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                    break;
-                case 2:
-                    transform.localRotation = Quaternion.Euler(0f, -90, 0f);
-                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                    break;
-                case 3:
-                    transform.localRotation = Quaternion.Euler(0f, 180, 0f);
-                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                    break;
-            }
+        //     switch (WalkDirection)
+        //     {
+        //         case 0:
+        //             transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        //             transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //             break;
+        //         case 1:
+        //             transform.localRotation = Quaternion.Euler(0f, 90, 0f);
+        //             transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //             break;
+        //         case 2:
+        //             transform.localRotation = Quaternion.Euler(0f, -90, 0f);
+        //             transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //             break;
+        //         case 3:
+        //             transform.localRotation = Quaternion.Euler(0f, 180, 0f);
+        //             transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //             break;
+        //     }
 
-            if (walkCounter <= 0)
-            {
-                stopPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-                isWalking = false;
-                //stop movement
-                transform.position = stopPosition;
-                // animator.SetBool("isRunning", false);
-                //reset the waitCounter
-                waitCounter = waitTime;
-            }
+        //     if (walkCounter <= 0)
+        //     {
+        //         stopPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        //         isWalking = false;
+        //         //stop movement
+        //         transform.position = stopPosition;
+        //         // animator.SetBool("isRunning", false);
+        //         //reset the waitCounter
+        //         waitCounter = waitTime;
+        //     }
 
 
-        }
-        else
-        {
+        // }
+        // else
+        // {
 
-            waitCounter -= Time.deltaTime;
+        //     waitCounter -= Time.deltaTime;
 
-            if (waitCounter <= 0)
-            {
-                ChooseDirection();
-            }
-        }
+        //     if (waitCounter <= 0)
+        //     {
+        //         ChooseDirection();
+        //     }
+        // }
 
     }
     public void ChooseDirection()
@@ -111,7 +111,7 @@ public class Minions : MonoBehaviour
         if (seeker.IsDone())
         {
             seeker.StartPath(transform.position, target, OnpathCallBack);
-               animatiorMinions.SetBool("Run", false);
+            animatiorMinions.SetBool("Run", false);
         }
         else
         {
@@ -123,7 +123,7 @@ public class Minions : MonoBehaviour
     Vector3 findTarget()
     {
         Vector3 playPos = FindObjectOfType<Player>().transform.position;
-          animatiorMinions.SetBool("Run", true);
+        animatiorMinions.SetBool("Run", true);
         return playPos;
     }
     void OnpathCallBack(Path p)
@@ -158,17 +158,27 @@ public class Minions : MonoBehaviour
             {
                 currentWp++;
             }
-            // if (force.x != 0)
-            // {
-            //     if (force.x < 0)
-            //     {
-            //         enemySR.transform.localRotation = Quaternion.Euler(0, 180, 0);
-            //     }
-            //     else
-            //     {
-            //         enemySR.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            //     }
-            // }
+            if (force.x != 0 || force.z != 0)
+            {
+                if (force.z < 0)
+                {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
+                }
+                else
+                {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
+                }
+
+                // if (force.x < 0)
+                // {
+                //     transform.localRotation = Quaternion.Euler(0, -90, 0);
+                // }
+                // else
+                // {
+                //     transform.localRotation = Quaternion.Euler(0, 90, 0);
+                // }
+            }
+
             yield return null;
         }
     }
@@ -190,7 +200,7 @@ public class Minions : MonoBehaviour
     }
     void Damage()
     {
-        int damage = Random.Range( gameManager.enemyConfig.minDamage,  gameManager.enemyConfig.maxDamage);
+        int damage = Random.Range(gameManager.enemyConfig.minDamage, gameManager.enemyConfig.maxDamage);
         FindObjectOfType<GameManager>().TakeDamagePlayer(damage);
     }
 }
