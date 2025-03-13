@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SpikesTrap : MonoBehaviour
 {
-    public float damage = 25f;
+    public int damage = 25;
     public float activationDelay = 0f;
     public float activeTime = 1.0f;
     public float resetTime = 2.0f;
@@ -21,25 +21,22 @@ public class SpikesTrap : MonoBehaviour
         activatedPosition = originalPosition + new Vector3(0, 0.9f, 0);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!isActive && other.CompareTag("Player"))
-        {
-            StartCoroutine(ActivateTrap(other));
-        }
-    }
 
-    private IEnumerator ActivateTrap(Collider target)
+    private IEnumerator ActivateTrap()
     {
         isActive = true;
         yield return new WaitForSeconds(activationDelay);
 
         spikesTransform.localPosition = activatedPosition;
 
-        Player targetHealth = target.GetComponent<Player>();
-        if (targetHealth != null)
+        Collider[] hitPlayers = Physics.OverlapSphere(transform.position, 0.5f, LayerMask.GetMask("Player"));
+        foreach (Collider player in hitPlayers)
         {
-            targetHealth.TakeDamage((int)damage);
+            Player targetHealth = player.GetComponent<Player>();
+            if (targetHealth != null)
+            {
+                targetHealth.TakeDamage(damage);
+            }
         }
 
         yield return new WaitForSeconds(activeTime);
@@ -50,5 +47,13 @@ public class SpikesTrap : MonoBehaviour
         isActive = false;
     }
 
-    
+
+    public void TriggerTrap()
+    {
+        if (!isActive)
+        {
+            Debug.Log("Kích hoạt bẫy!");
+            StartCoroutine(ActivateTrap());
+        }
+    }
 }

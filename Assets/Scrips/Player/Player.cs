@@ -5,8 +5,8 @@ using System;
 public class Player : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] private int maxHP = 100;
-    [SerializeField] private int currentHP;
+    [SerializeField] public int maxHP = 100;
+    [SerializeField] public int currentHP;
     [SerializeField] private int maxMana = 50;
     [SerializeField] private int currentMana;
     [SerializeField] public int attackDamage = 10;
@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool isInvincible = false;
     [SerializeField] private List<string> statusEffects = new List<string>();
 
+    private PlayerUi PlayerUi;
     private void Start()
     {
         currentHP = maxHP;
@@ -41,6 +42,7 @@ public class Player : MonoBehaviour
         int actualDamage = Mathf.Max(damage - defense, 1);
         currentHP -= actualDamage;
 
+       // PlayerUi.UpdateUiHp();
         if (currentHP <= 0)
         {
             currentHP = 0;
@@ -81,8 +83,23 @@ public class Player : MonoBehaviour
         Debug.Log("Player has died!");
         // Thực hiện logic hồi sinh hoặc game over
     }
+   // private void OnControllerColliderHit(ControllerColliderHit hit)
+    //{
+        //Debug.Log("Va chạm với: " + hit.collider.name); // Kiểm tra xem nhân vật có va chạm đúng không
 
-  
+       // if (hit.collider.CompareTag("Trap"))
+       // {
+        //    Debug.Log("Chạm vào bẫy: " + hit.collider.name);
+         //   SpikesTrap trap = hit.collider.GetComponent<SpikesTrap>();
+         //   if (trap != null)
+          // {
+    //            Debug.Log("Gọi TriggerTrap() từ bẫy.");
+     //           trap.TriggerTrap();
+    //        }
+      //  }
+    //}
+
+
     public int GetCurrentHP() => currentHP;
     public int GetMaxHP() => maxHP;
     public int GetGold() => gold;

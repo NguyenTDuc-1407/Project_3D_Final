@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using Pathfinding;
 using UnityEngine;
 
@@ -23,6 +23,12 @@ public class Minions : MonoBehaviour
     [SerializeField] float moveSpeed;
     void Start()
     {
+
+        gameManager = FindObjectOfType<GameManager>();
+        if (gameManager == null)
+        {
+            Debug.Log("Gamemanager null");
+        }
         animatiorMinions = GetComponent<Animator>();
         walkTime = Random.Range(3, 6);
         waitTime = Random.Range(5, 7);
@@ -35,56 +41,56 @@ public class Minions : MonoBehaviour
     }
     void Update()
     {
-        if (isWalking)
-        {
+        // if (isWalking)
+        // {
 
-            // animator.SetBool("isRunning", true);
+        //     // animator.SetBool("isRunning", true);
 
-            walkCounter -= Time.deltaTime;
+        //     walkCounter -= Time.deltaTime;
 
-            switch (WalkDirection)
-            {
-                case 0:
-                    transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                    break;
-                case 1:
-                    transform.localRotation = Quaternion.Euler(0f, 90, 0f);
-                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                    break;
-                case 2:
-                    transform.localRotation = Quaternion.Euler(0f, -90, 0f);
-                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                    break;
-                case 3:
-                    transform.localRotation = Quaternion.Euler(0f, 180, 0f);
-                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
-                    break;
-            }
+        //     switch (WalkDirection)
+        //     {
+        //         case 0:
+        //             transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        //             transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //             break;
+        //         case 1:
+        //             transform.localRotation = Quaternion.Euler(0f, 90, 0f);
+        //             transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //             break;
+        //         case 2:
+        //             transform.localRotation = Quaternion.Euler(0f, -90, 0f);
+        //             transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //             break;
+        //         case 3:
+        //             transform.localRotation = Quaternion.Euler(0f, 180, 0f);
+        //             transform.position += transform.forward * moveSpeed * Time.deltaTime;
+        //             break;
+        //     }
 
-            if (walkCounter <= 0)
-            {
-                stopPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-                isWalking = false;
-                //stop movement
-                transform.position = stopPosition;
-                // animator.SetBool("isRunning", false);
-                //reset the waitCounter
-                waitCounter = waitTime;
-            }
+        //     if (walkCounter <= 0)
+        //     {
+        //         stopPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        //         isWalking = false;
+        //         //stop movement
+        //         transform.position = stopPosition;
+        //         // animator.SetBool("isRunning", false);
+        //         //reset the waitCounter
+        //         waitCounter = waitTime;
+        //     }
 
 
-        }
-        else
-        {
+        // }
+        // else
+        // {
 
-            waitCounter -= Time.deltaTime;
+        //     waitCounter -= Time.deltaTime;
 
-            if (waitCounter <= 0)
-            {
-                ChooseDirection();
-            }
-        }
+        //     if (waitCounter <= 0)
+        //     {
+        //         ChooseDirection();
+        //     }
+        // }
 
     }
     public void ChooseDirection()
@@ -96,22 +102,28 @@ public class Minions : MonoBehaviour
     }
     public void DameEnemy(int damage)
     {
+        if (gameManager == null || gameManager.enemyConfig == null)
+        {
+            Debug.LogError("gameManager hoặc gameManager.enemyConfig đang bị null trong DameEnemy!");
+            return;
+        }
+
         gameManager.enemyConfig.hpEnemy -= damage;
         if (gameManager.enemyConfig.hpEnemy <= 0)
         {
             checkDead = true;
             gameManager.enemyConfig.hpEnemy = 0;
-            // Instantiate(item, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }
+
     void caculatePath()
     {
         Vector3 target = findTarget();
         if (seeker.IsDone())
         {
             seeker.StartPath(transform.position, target, OnpathCallBack);
-               animatiorMinions.SetBool("Run", false);
+            animatiorMinions.SetBool("Run", false);
         }
         else
         {
@@ -123,7 +135,7 @@ public class Minions : MonoBehaviour
     Vector3 findTarget()
     {
         Vector3 playPos = FindObjectOfType<Player>().transform.position;
-          animatiorMinions.SetBool("Run", true);
+        animatiorMinions.SetBool("Run", true);
         return playPos;
     }
     void OnpathCallBack(Path p)
@@ -158,39 +170,49 @@ public class Minions : MonoBehaviour
             {
                 currentWp++;
             }
-            // if (force.x != 0)
-            // {
-            //     if (force.x < 0)
-            //     {
-            //         enemySR.transform.localRotation = Quaternion.Euler(0, 180, 0);
-            //     }
-            //     else
-            //     {
-            //         enemySR.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            //     }
-            // }
+            if (force.x != 0 || force.z != 0)
+            {
+                if (force.z < 0)
+                {
+                    transform.localRotation = Quaternion.Euler(0, 180, 0);
+                }
+                else
+                {
+                    transform.localRotation = Quaternion.Euler(0, 0, 0);
+                }
+
+                // if (force.x < 0)
+                // {
+                //     transform.localRotation = Quaternion.Euler(0, -90, 0);
+                // }
+                // else
+                // {
+                //     transform.localRotation = Quaternion.Euler(0, 90, 0);
+                // }
+            }
+
             yield return null;
         }
     }
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.CompareTag("Player"))
-    //     {
-    //         FindObjectOfType<GameManager>().player = other.GetComponent<Player>();
-    //         InvokeRepeating("Damage", 0, 0.3f);
-    //     }
-    // }
-    // private void OnTriggerExit(Collider other)
-    // {
-    //     if (other.CompareTag("Player"))
-    //     {
-    //         FindObjectOfType<GameManager>().player = null;
-    //         CancelInvoke("Damage");
-    //     }
-    // }
-    // void Damage()
-    // {
-    //     int damage = Random.Range(minDamage, maxDamage);
-    //     FindObjectOfType<GameManager>().TakeDamagePlayer(damage);
-    // }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            FindObjectOfType<GameManager>().player = other.GetComponent<Player>();
+            InvokeRepeating("Damage", 0, 0.3f);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            FindObjectOfType<GameManager>().player = null;
+            CancelInvoke("Damage");
+        }
+    }
+    void Damage()
+    {
+        int damage = Random.Range(gameManager.enemyConfig.minDamage, gameManager.enemyConfig.maxDamage);
+        FindObjectOfType<GameManager>().TakeDamagePlayer(damage);
+    }
 }

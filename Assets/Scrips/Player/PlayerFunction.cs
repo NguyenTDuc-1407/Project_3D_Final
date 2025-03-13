@@ -16,7 +16,7 @@ public class PlayerFunction : MonoBehaviour
 
     public GameObject skillAoeFx;
     public LayerMask minionsLayer;
-    private float attackRange = 2f;
+    private float attackRange = 5f;
     private float attackPlayer;
     private Player player;
     private Animator animator;
@@ -27,7 +27,7 @@ public class PlayerFunction : MonoBehaviour
     {
         if (player == null)
         {
-            player = FindObjectOfType<Player>();
+            player = GetComponent<Player>();
         }
         attackPlayer = player.attackDamage;
         animator = GetComponent<Animator>();
@@ -83,15 +83,18 @@ public class PlayerFunction : MonoBehaviour
         if (hitMinions.Length > 0)
             {
             foreach (Collider minion in hitMinions)
+            {
+                Minions minions = minion.GetComponent<Minions>();
+                if (minions != null)
                 {
-                OnAttack?.Invoke(player, minion.gameObject, attackPlayer);
-                Debug.Log("Hit " + minion.name + " with " + attackPlayer + " damage.");
+                    OnAttack?.Invoke(player, minion.gameObject, attackPlayer);
+                    Debug.Log("Hit " + minion.name + " with " + attackPlayer + " damage.");
+                }
             }
                 }
         else
         {
             Debug.Log("No minions in range, attack missed.");
             }
-    }
-
+        }
 }
