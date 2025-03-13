@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using Pathfinding;
 using UnityEngine;
 
@@ -23,6 +23,12 @@ public class Minions : MonoBehaviour
     [SerializeField] float moveSpeed;
     void Start()
     {
+
+        gameManager = FindObjectOfType<GameManager>();
+        if (gameManager == null)
+        {
+            Debug.Log("Gamemanager null");
+        }
         animatiorMinions = GetComponent<Animator>();
         walkTime = Random.Range(3, 6);
         waitTime = Random.Range(5, 7);
@@ -96,15 +102,21 @@ public class Minions : MonoBehaviour
     }
     public void DameEnemy(int damage)
     {
+        if (gameManager == null || gameManager.enemyConfig == null)
+        {
+            Debug.LogError("gameManager hoặc gameManager.enemyConfig đang bị null trong DameEnemy!");
+            return;
+        }
+
         gameManager.enemyConfig.hpEnemy -= damage;
         if (gameManager.enemyConfig.hpEnemy <= 0)
         {
             checkDead = true;
             gameManager.enemyConfig.hpEnemy = 0;
-            // Instantiate(item, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }
+
     void caculatePath()
     {
         Vector3 target = findTarget();

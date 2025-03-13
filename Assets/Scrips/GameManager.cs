@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     // // ConfigManger configManger;
     // public List<ItemDatas> listItemDatas = new List<ItemDatas>();
     InventoryUI inventoryUI;
-    bool checkOpenInventory;
+    bool checkOpenInventory = false;
     public static event Action<GameState> OnGameStateChanged;
     void Awake()
     {
@@ -49,18 +49,10 @@ public class GameManager : MonoBehaviour
     }
     void OpenInventory()
     {
-        if (Input.GetKey(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (checkOpenInventory == true)
-            {
-                inventory.SetActive(true);
-                checkOpenInventory = false;
-            }
-            else
-            {
-                inventory.SetActive(false);
-                checkOpenInventory = true;
-            }
+            checkOpenInventory = !checkOpenInventory;
+            inventory.SetActive(checkOpenInventory);
         }
     }
     public void Add(ItemConfig itemConfig)

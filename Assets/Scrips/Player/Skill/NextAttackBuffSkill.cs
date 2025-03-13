@@ -11,7 +11,7 @@ public class NextAttackBuffSkill : SkillBase
 
     private void Start()
     {
-        PlayerFunction = FindObjectOfType<PlayerFunction>();
+        PlayerFunction = GetComponent<PlayerFunction>();
         if (PlayerFunction != null)
         {
             PlayerFunction.OnAttack += ApplyBuff;
@@ -29,7 +29,19 @@ public class NextAttackBuffSkill : SkillBase
     private void ApplyBuff(Player playerAttack, GameObject target, float attackDamage)
     {
         if (!isBuffed) return;
-        if (!isBuffed || target == null) return;
+
+        if (target == null)
+        {
+            Debug.LogError("❌ ApplyBuff() bị gọi nhưng target bị null!");
+            return;
+        }
+
+        Minions enemy = target.GetComponent<Minions>();
+        if (enemy == null)
+        {
+            Debug.LogError("❌ Target không có component Minions! Target: " + target.name);
+            return;
+        }
 
         float damage = playerAttack.attackDamage;
         bool isCritical = (playerAttack.critChance > 0) && (Random.value < playerAttack.critChance);
@@ -38,22 +50,14 @@ public class NextAttackBuffSkill : SkillBase
         {
             damage *= attackBoostOnCrit;
             damage *= playerAttack.critMultiplier;
-            damage *= Mathf.Max(1f, playerAttack.critMultiplier);
         }
         else
         {
-            damage *= buffMultiplier; 
             damage *= buffMultiplier;
         }
 
-        target.GetComponent<Minions>()?.DameEnemy((int)damage);
-        Debug.Log("Buffed attack dealt " + damage + " damage to " + target.name);
-        Minions enemy = target.GetComponent<Minions>();
-        if (enemy != null)
-        {
-            enemy.DameEnemy((int)damage);
-            Debug.Log("Buffed attack dealt " + damage + " damage to " + target.name);
-        }
+        enemy.DameEnemy((int)damage);
+        Debug.Log("✅ Buffed attack dealt " + damage + " damage to " + target.name);
 
         isBuffed = false;
     }
