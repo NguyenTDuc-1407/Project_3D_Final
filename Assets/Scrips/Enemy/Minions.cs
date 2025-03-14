@@ -175,20 +175,26 @@ public class Minions : MonoBehaviour
                 if (force.z < 0)
                 {
                     transform.localRotation = Quaternion.Euler(0, 180, 0);
+                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+
                 }
-                else
+                else if (force.x < 0)
+                {
+                    transform.localRotation = Quaternion.Euler(0, -90, 0);
+                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                }
+                else if (force.x >= 0)
+                {
+                    transform.localRotation = Quaternion.Euler(0, 90, 0);
+                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
+                }
+                else if (force.z >= 0)
                 {
                     transform.localRotation = Quaternion.Euler(0, 0, 0);
+                    transform.position += transform.forward * moveSpeed * Time.deltaTime;
                 }
 
-                // if (force.x < 0)
-                // {
-                //     transform.localRotation = Quaternion.Euler(0, -90, 0);
-                // }
-                // else
-                // {
-                //     transform.localRotation = Quaternion.Euler(0, 90, 0);
-                // }
+
             }
 
             yield return null;
