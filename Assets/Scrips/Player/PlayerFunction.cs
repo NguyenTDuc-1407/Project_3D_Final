@@ -10,7 +10,8 @@ public class PlayerFunction : MonoBehaviour
     public float interactionRange = 3f;
     public LayerMask interactableLayer;
     private IInteractable currentInteractable;
-
+    float attackDelay = 2f;
+    bool canAttack = true;
 
     // Start is called before the first frame update
 
@@ -32,6 +33,8 @@ public class PlayerFunction : MonoBehaviour
         attackPlayer = player.attackDamage;
         animator = GetComponent<Animator>();
         isAttacking = Animator.StringToHash("isAttacking");
+
+        OnAttack += ApplyAttack;
     }
 
 
@@ -39,12 +42,19 @@ public class PlayerFunction : MonoBehaviour
     void Update()
     {
         CameraLooking();
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canAttack)
         {
-            IsAttack();
+            StartCoroutine(AttackCoroutine());
         }
     }
 
+    IEnumerator AttackCoroutine()
+    {
+        canAttack = false;  // Ngăn chặn tấn công liên tục
+        IsAttack();         // Gọi hàm tấn công
+        yield return new WaitForSeconds(attackDelay); // Đợi trước khi có thể tấn công tiếp
+        canAttack = true;   // Cho phép tấn công lại
+    }
     void CameraLooking()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -75,13 +85,13 @@ public class PlayerFunction : MonoBehaviour
         }
     }
 
-        void IsAttack()
-        {
+    void IsAttack()
+    {
         animator.SetTrigger(isAttacking);
         Collider[] hitMinions = Physics.OverlapSphere(transform.position, attackRange, minionsLayer);
 
         if (hitMinions.Length > 0)
-            {
+        {
             foreach (Collider minion in hitMinions)
             {
                 Minions minions = minion.GetComponent<Minions>();
@@ -91,10 +101,18 @@ public class PlayerFunction : MonoBehaviour
                     Debug.Log("Hit " + minion.name + " with " + attackPlayer + " damage.");
                 }
             }
-                }
+        }
         else
         {
             Debug.Log("No minions in range, attack missed.");
-            }
         }
+    }
+    void ApplyAttack(Player player, GameObject minions, float attackPlayer)
+    {
+        Minions minion = minions.GetComponent<Minions>();
+        if (minion != null)
+        {
+            minion.DameEnemy((int)attackPlayer);
+        }
+    }
 }
