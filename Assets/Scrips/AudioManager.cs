@@ -8,8 +8,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instace;
     public AudioSource BackGroundMusic;
     public Slider MusicVolume;
-    public Toggle MusicToggel;
-
+    public Toggle MusicToggle;
+    public GameObject SettingMenu;
     private void Awake()
     {
         if (Instace == null)
@@ -25,12 +25,19 @@ public class AudioManager : MonoBehaviour
     }
     void Start()
     {
-        if (MusicToggel == null)
-            MusicToggel = FindObjectOfType<Toggle>();
+        if (SettingMenu == null)
+            SettingMenu = GameObject.Find("Setting Menu");
+
+        if (MusicToggle == null)
+            MusicToggle = GameObject.Find("MusicState")?.GetComponent<Toggle>();
 
         if (MusicVolume == null)
-            MusicVolume = FindObjectOfType<Slider>();
+            MusicVolume = GameObject.Find("Audio")?.GetComponent<Slider>();
+        
+        if (BackGroundMusic == null)
+            BackGroundMusic = GameObject.Find("BackGroundMusic")?.GetComponent<AudioSource>();
 
+        SettingMenu.SetActive(false);
         float saveVolume = PlayerPrefs.GetFloat("Volume", 1);
         bool isMusicOn = PlayerPrefs.GetInt("MusicOn",1) == 1;
 
@@ -42,10 +49,10 @@ public class AudioManager : MonoBehaviour
             if (MusicVolume) MusicVolume.onValueChanged.AddListener(SetVolume);
         }
 
-        if (MusicToggel != null)
+        if (MusicToggle != null)
         {
-            if (MusicToggel) MusicToggel.isOn = isMusicOn;
-            if (MusicToggel) MusicToggel.onValueChanged.AddListener(SetMusicState);
+            if (MusicToggle) MusicToggle.isOn = isMusicOn;
+            if (MusicToggle) MusicToggle.onValueChanged.AddListener(SetMusicState);
         }
     }
 

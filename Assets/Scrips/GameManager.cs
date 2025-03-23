@@ -2,12 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public GameState state;
+    [Header("Enemy")]
     public EnemyConfig enemyConfig;
+
+    [Header("Inentory")]
     public ConfigInventory configInventory;
     ItemConfig itemConfig;
     public Player player;
@@ -16,7 +20,11 @@ public class GameManager : MonoBehaviour
     // // ConfigManger configManger;
     // public List<ItemDatas> listItemDatas = new List<ItemDatas>();
     InventoryUI inventoryUI;
-    bool checkOpenInventory = false;
+    bool checkOpenInventory = true;
+
+    [Header("Menu")]
+    bool menuState = false;
+    public GameObject Menu;
     public static event Action<GameState> OnGameStateChanged;
     void Awake()
     {
@@ -27,8 +35,19 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        inventory.SetActive(false);
+        
         UpdateGameState(GameState.start);
+
+        if (inventory == null)
+        {
+            inventory = GameObject.Find("Inventory");
+            inventory.SetActive(false);
+        }
+        if (Menu == null)
+        {
+            Menu = GameObject.Find("Setting Menu");
+            Menu.SetActive(false);
+        }
     }
     public void UpdateGameState(GameState newState)
     {
@@ -46,6 +65,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         OpenInventory();
+        MenuIsOpen();
     }
     void OpenInventory()
     {
@@ -53,6 +73,15 @@ public class GameManager : MonoBehaviour
         {
             checkOpenInventory = !checkOpenInventory;
             inventory.SetActive(checkOpenInventory);
+            
+        }
+    }
+    void MenuIsOpen()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            menuState = !menuState;
+            Menu.SetActive(menuState);
         }
     }
     public void Add(ItemConfig itemConfig)
@@ -91,7 +120,7 @@ public class GameManager : MonoBehaviour
     }
     public void UseItemInventory(ItemConfig itemDatas)
     {
-        
+
         itemDatas.amount -= 1;
         if (itemDatas.amount == 0)
         {
