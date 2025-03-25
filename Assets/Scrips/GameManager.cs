@@ -80,8 +80,18 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            menuState = !menuState;
-            Menu.SetActive(menuState);
+            if (Menu != null)
+            {
+                menuState = !menuState;
+                Menu.SetActive(menuState);
+            }else
+            {
+                if (Menu == null)
+                {
+                    Menu = GameObject.Find("Setting Menu");
+                }
+            }
+           
         }
     }
     public void Add(ItemConfig itemConfig)

@@ -23,7 +23,27 @@ public class AudioManager : MonoBehaviour
             return;
         }
     }
-    void Start()
+    private void Start()
+    {
+        FindUIElements();
+        SettingMenu.SetActive(false);
+    }
+    void OnEnable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, UnityEngine.SceneManagement.LoadSceneMode mode)
+    {
+        FindUIElements();
+    }
+
+    void FindUIElements()
     {
         if (SettingMenu == null)
             SettingMenu = GameObject.Find("Setting Menu");
@@ -37,7 +57,7 @@ public class AudioManager : MonoBehaviour
         if (BackGroundMusic == null)
             BackGroundMusic = GameObject.Find("BackGroundMusic")?.GetComponent<AudioSource>();
 
-        SettingMenu.SetActive(false);
+        
         float saveVolume = PlayerPrefs.GetFloat("Volume", 1);
         bool isMusicOn = PlayerPrefs.GetInt("MusicOn",1) == 1;
 
