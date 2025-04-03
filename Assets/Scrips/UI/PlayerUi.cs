@@ -3,34 +3,17 @@ using UnityEngine.UI;
 
 public class PlayerUi : MonoBehaviour
 {
-    public Slider HealthBar;
-    public Player player;
+    public Player playerStats;
+    public Image hpFillImage; // Thanh máu
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();
-
-        if (player == null)
-        {
-            Debug.LogError("Player không tồn tại");
-            return;
-        }
-
-        if (HealthBar == null)
-        {
-            Debug.LogError("HealthBar Null");
-            return;
-        }
-
-        HealthBar.maxValue = player.maxHP;
-        HealthBar.value = player.currentHP;
+        playerStats.OnHealthChanged += UpdateHPBar;
     }
 
-    public void UpdateUiHp()
+    private void UpdateHPBar(int newHealth)
     {
-        if (HealthBar != null && player != null)
-        {
-            HealthBar.value = player.currentHP / player.maxHP;
-        }
+        float fillAmount = (float)newHealth / playerStats.maxHP;
+        hpFillImage.fillAmount = fillAmount;
     }
 }
