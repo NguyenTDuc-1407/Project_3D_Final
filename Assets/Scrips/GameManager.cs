@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [Header("Inentory")]
     public ConfigInventory configInventory;
     ItemConfig itemConfig;
-    public Player player;
+    public GameObject player;
     // public ItemDatas itemData;
     public GameObject inventory;
     // // ConfigManger configManger;
@@ -37,7 +37,10 @@ public class GameManager : MonoBehaviour
     {
         
         UpdateGameState(GameState.start);
-
+        if (player == null)
+        {
+            player = GameObject.Find("Player");
+        }
         if (inventory == null)
         {
             inventory = GameObject.Find("Inventory");
@@ -157,7 +160,7 @@ public class GameManager : MonoBehaviour
     }
     public void TakeDamagePlayer(int damage)
     {
-        player.TakeDamage(damage);
+        player.GetComponent<Player>().TakeDamage(damage);
     }
     public enum GameState
     {

@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] private bool isInvincible = false;
     [SerializeField] private List<string> statusEffects = new List<string>();
 
+    public event Action<int> OnHealthChanged;
     private PlayerUi PlayerUi;
     private void Start()
     {
@@ -42,12 +43,13 @@ public class Player : MonoBehaviour
         int actualDamage = Mathf.Max(damage - defense, 1);
         currentHP -= actualDamage;
 
-       // PlayerUi.UpdateUiHp();
+        // PlayerUi.UpdateUiHp();
         if (currentHP <= 0)
         {
             currentHP = 0;
             Die();
         }
+        OnHealthChanged?.Invoke(currentHP);
     }
 
     public void Heal(int amount)
