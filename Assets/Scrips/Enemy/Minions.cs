@@ -195,17 +195,17 @@ public class Minions : MonoBehaviour
             yield return null;
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+    private void OnCollisionEnter(Collision other) {
+        
+        if (other.gameObject.tag =="Player")
         {
-            FindObjectOfType<GameManager>().player = other.GetComponent<Player>();
+            // FindObjectOfType<GameManager>().player = other.GetComponent<Player>();
             InvokeRepeating("Damage", 0, 0.3f);
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
+    private void OnCollisionExit(Collision other) {
+        
+        if (other.gameObject.tag =="Player")
         {
             FindObjectOfType<GameManager>().player = null;
             CancelInvoke("Damage");
