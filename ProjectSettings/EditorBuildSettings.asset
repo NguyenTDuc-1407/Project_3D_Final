@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: c56a2c4ee0b624144b1545472488c1fa
+  - enabled: 1
+    path: Assets/Scenes/BossMage.unity
+    guid: 0a35f0d4ad1a50f4aa20428cf7055b2f
   m_configObjects: {}
