@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
         int actualDamage = Mathf.Max(damage - defense, 1);
         currentHP -= actualDamage;
 
-        // PlayerUi.UpdateUiHp();
+
         if (currentHP <= 0)
         {
             currentHP = 0;

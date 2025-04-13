@@ -206,7 +206,7 @@ public class Minions : MonoBehaviour
         {
             Debug.Log("Hit Player");
             other.GetComponent<Player>();
-            InvokeRepeating("Damage", 10, 0.3f);
+            InvokeRepeating("Damage", 1, 0.3f);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -220,7 +220,7 @@ public class Minions : MonoBehaviour
     void Damage()
     {
         int damage = Random.Range(gameManager.enemyConfig.minDamage, gameManager.enemyConfig.maxDamage);
-        gameManager.TakeDamagePlayer(damage);
+        FindObjectOfType<Player>().TakeDamage(damage);
     }
 
 }

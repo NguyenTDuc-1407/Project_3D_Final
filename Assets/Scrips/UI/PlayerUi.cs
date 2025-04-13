@@ -8,10 +8,12 @@ public class PlayerUi : MonoBehaviour
 
     private void Start()
     {
+        if (playerStats == null)
+            Debug.LogError("playerStats chưa được gán!");
         playerStats.OnHealthChanged += UpdateHPBar;
     }
 
-    private void UpdateHPBar(int newHealth)
+    public void UpdateHPBar(int newHealth)
     {
         float fillAmount = (float)newHealth / playerStats.maxHP;
         hpFillImage.fillAmount = fillAmount;
